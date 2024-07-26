@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,6 +37,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # "django.contrib.sites",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "dj_rest_auth",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "dj_rest_auth.registration",
+    "phonenumber_field",
+    "corsheaders",
+
+
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +62,24 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'allauth.account.middleware.AccountMiddleware',
+
 ]
+# MIDDLEWARE = [
+#     "corsheaders.middleware.CorsMiddleware",
+#     "django.middleware.security.SecurityMiddleware",
+#     "django.contrib.sessions.middleware.SessionMiddleware",
+#     "django.middleware.cache.UpdateCacheMiddleware",
+#     "django.middleware.common.CommonMiddleware",
+#     "django.middleware.cache.FetchFromCacheMiddleware",
+#     "django.middleware.csrf.CsrfViewMiddleware",
+#     "django.contrib.auth.middleware.AuthenticationMiddleware",
+#     "django.contrib.messages.middleware.MessageMiddleware",
+#     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+#     'allauth.account.middleware.AccountMiddleware'
+# ]
+
 
 ROOT_URLCONF = 'core.urls'
 
@@ -121,3 +153,76 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Authorization
+AUTH_USER_MODEL = 'users.User'
+
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    # "users.User.backend.AuthBackend",
+]
+
+# # Authentication
+# AUTHENTICATION_BACKENDS = [
+#     "users.backends.phone_backend.PhoneNumberAuthBackend",
+#     "users.backends.email_backend.EmailAuthBackend",
+# ]
+
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": (
+#         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+#     ),
+#     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+# }
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+# SITE_ID = 1
+
+# REST_USE_JWT = True
+
+# JWT_AUTH_COOKIE = "phonenumber-auth"
+# JWT_AUTH_REFRESH_COOKIE = "phonenumber-refresh-token"
+
+# # ACCOUNT_EMAIL_VERIFICATION SETTINGS
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_UNIQUE_EMAIL = True
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+
+# # Email
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'debianl022@gmail.com'
+# EMAIL_HOST_PASSWORD = ''
+
+# Phone number field
+PHONENUMBER_DEFAULT_REGION = "IR"
+
+# Token length for OTP
+TOKEN_LENGTH = 6
+
+# Token expiry
+TOKEN_EXPIRE_MINUTES = 3
+
+# Twilio
+TWILIO_ACCOUNT_SID = 'ACff82d37876c57df8cdc5c5c918c25c8c'
+TWILIO_AUTH_TOKEN = 'a6272510ca2e8faefd93213fa8da2ea4'
+TWILIO_PHONE_NUMBER = '+989368477453'
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=150),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=150),
+
+}

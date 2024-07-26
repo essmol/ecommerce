@@ -1,0 +1,16 @@
+Django==4.2
+djangorestframework==3,14
+djangorestframework-simplejwt
+
+# Photo & Image
+Pillow==9.1.0
+
+
+dj-rest-auth
+
+django-allauth
+django-cors-headers
+django-countries
+django-phonenumber-field
+twilio
+phonenumbers
